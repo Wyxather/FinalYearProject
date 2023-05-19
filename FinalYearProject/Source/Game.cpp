@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Object.h"
 
 IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
     HWND,
@@ -172,6 +173,7 @@ auto Game::run() -> int {
     constexpr ImVec4 clearColor{ 0.45f, 0.55f, 0.60f, 1.00f };
     MSG msg;
     bool exit = false;
+    std::vector<std::unique_ptr<Object>> objects;
     do {
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
             TranslateMessage(&msg);
@@ -195,22 +197,45 @@ auto Game::run() -> int {
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        ImGui::ShowDemoWindow();
+        if (ImGui::GetIO().MouseClicked[0]) {
+            objects.emplace_back(std::make_unique<PhysicObject>());
+        }
+
+        std::erase_if(objects,
+                      [](const std::unique_ptr<Object>& object) {
+                          return (object->pos.x > ImGui::GetIO().DisplaySize.x || object->pos.x < .0) ||
+                              (object->pos.y > ImGui::GetIO().DisplaySize.y || object->pos.y < .0)
+                              ;
+                      });
+
+        for (auto&& object : objects) {
+            object->update();
+            object->draw();
+        }
+
+        ImGui::Begin("Debug");
+        ImGui::Text("Objects: %d", objects.size());
+        ImGui::End();
 
         ImGui::EndFrame();
         direct3DDevice9->SetRenderState(D3DRS_ZENABLE, FALSE);
         direct3DDevice9->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
         direct3DDevice9->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-        D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(clearColor.x * clearColor.w * 255.0f), (int)(clearColor.y * clearColor.w * 255.0f), (int)(clearColor.z * clearColor.w * 255.0f), (int)(clearColor.w * 255.0f));
-        direct3DDevice9->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
+        const D3DCOLOR clearColorDx = D3DCOLOR_RGBA((int)(clearColor.x * clearColor.w * 255.0f), (int)(clearColor.y * clearColor.w * 255.0f), (int)(clearColor.z * clearColor.w * 255.0f), (int)(clearColor.w * 255.0f));
+        direct3DDevice9->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clearColorDx, 1.0f, 0);
         if (direct3DDevice9->BeginScene() >= 0) {
             ImGui::Render();
             ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
             direct3DDevice9->EndScene();
         }
-        const HRESULT result = direct3DDevice9->Present(nullptr, nullptr, nullptr, nullptr);
 
         // Handle loss of D3D9 device
+        const HRESULT result = direct3DDevice9->Present(
+            nullptr,
+            nullptr,
+            nullptr,
+            nullptr
+        );
         if (result == D3DERR_DEVICELOST && direct3DDevice9->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) {
             resetDevice();
         }

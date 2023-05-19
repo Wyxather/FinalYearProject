@@ -24,5 +24,6 @@ using namespace Microsoft::WRL;
 
 #include <array>
 #include <memory>
+#include <vector>
 
 #endif//PCH_H

@@ -5,6 +5,12 @@ public:
     Game(const HINSTANCE instance, const int showCmd);
     ~Game();
 
+    Game(Game&&) = delete;
+    Game& operator=(Game&&) = delete;
+
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
+
     auto run() -> int;
 
 private:
