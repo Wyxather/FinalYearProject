@@ -11,5 +11,5 @@ auto APIENTRY wWinMain(
 
     game = std::make_unique<decltype(game)::element_type>(hInstance, nCmdShow);
 
-    return game->update();
+    return game->run();
 }
