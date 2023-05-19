@@ -10,4 +10,7 @@
 
 #include "Resource.h"
 
+#include <array>
+#include <memory>
+
 #endif//PCH_H
