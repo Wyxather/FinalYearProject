@@ -173,7 +173,7 @@ auto Game::run() -> int {
     constexpr ImVec4 clearColor{ 0.45f, 0.55f, 0.60f, 1.00f };
     MSG msg;
     bool exit = false;
-    std::vector<std::unique_ptr<Object>> objects;
+    Object::objects.emplace_back(std::make_unique<Player>(ImVec2{ 500.f, 500.f }));
     do {
         while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
             TranslateMessage(&msg);
@@ -197,24 +197,28 @@ auto Game::run() -> int {
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        if (ImGui::GetIO().MouseClicked[0]) {
-            objects.emplace_back(std::make_unique<PhysicObject>());
-        }
+        Object::objects.reserve(Object::objects.size() + Object::spawnedObjects.size());
+        std::move(
+            std::make_move_iterator(Object::spawnedObjects.begin()),
+            std::make_move_iterator(Object::spawnedObjects.end()),
+            std::back_inserter(Object::objects)
+        );
+        Object::spawnedObjects.clear();
 
-        std::erase_if(objects,
+        std::erase_if(Object::objects,
                       [](const std::unique_ptr<Object>& object) {
-                          return (object->pos.x > ImGui::GetIO().DisplaySize.x || object->pos.x < .0) ||
-                              (object->pos.y > ImGui::GetIO().DisplaySize.y || object->pos.y < .0)
-                              ;
+                          return
+                              (object->pos.x > ImGui::GetIO().DisplaySize.x || object->pos.x < .0) ||
+                              (object->pos.y > ImGui::GetIO().DisplaySize.y || object->pos.y < .0);
                       });
 
-        for (auto&& object : objects) {
+        for (auto&& object : Object::objects) {
             object->update();
             object->draw();
         }
 
         ImGui::Begin("Debug");
-        ImGui::Text("Objects: %d", objects.size());
+        ImGui::Text("Objects: %d", Object::objects.size());
         ImGui::End();
 
         ImGui::EndFrame();
