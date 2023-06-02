@@ -35,8 +35,8 @@ public class GroundScript : MonoBehaviour {
             return;
         }
 
-        var missile = collision.GetComponent<Missile>();
-        if (missile == null) {
+        var projectile = collision.GetComponent<Projectile>();
+        if (projectile == null) {
             return;
         }
 
