@@ -29,7 +29,7 @@ public class Entity : MonoBehaviour
             this.bar = image;
         }
 
-        public void UpdateBar()
+        public void UpdateImageBar()
         {
             this.bar.fillAmount = value / max;
         }
@@ -77,7 +77,7 @@ public class Entity : MonoBehaviour
         if (!IsInAction())
             return;
 
-        UpdateCannon();
+        UpdateCannonOnMousePosition();
         UpdateInput();
     }
 
@@ -107,6 +107,11 @@ public class Entity : MonoBehaviour
         return stamina.value <= 0.0f;
     }
 
+    public void RestoreStamina()
+    {
+        stamina.value = stamina.max;
+    }
+
     void Shoot()
     {
         var backup = cannon.transform.rotation;
@@ -126,10 +131,10 @@ public class Entity : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             power.value = 0.0f;
         if (Input.GetKey(KeyCode.Space))
-            {
-                power.value += Time.deltaTime * 10.0f;
-                power.value = Mathf.Clamp(power.value, 0f, power.max);
-            }
+        {
+            power.value += Time.deltaTime * 10.0f;
+            power.value = Mathf.Clamp(power.value, 0f, power.max);
+        }
         if (Input.GetKeyUp(KeyCode.Space))
             Shoot();
         var horizontal = Input.GetAxis("Horizontal");
@@ -148,12 +153,12 @@ public class Entity : MonoBehaviour
 
     void UpdateUI()
     {
-        health.UpdateBar();
-        stamina.UpdateBar();
-        power.UpdateBar();
+        health.UpdateImageBar();
+        stamina.UpdateImageBar();
+        power.UpdateImageBar();
     }
 
-    void UpdateCannon()
+    void UpdateCannonOnMousePosition()
     {
         var delta = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         delta.Normalize();

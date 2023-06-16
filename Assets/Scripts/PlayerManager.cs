@@ -20,11 +20,14 @@ public class PlayerManager : MonoBehaviour
         if (tick <= 0.0f)
         {
             tick = 10.0f;
+
             entityIndexInAction += 1;
             if (entityIndexInAction >= entities.Length)
                 entityIndexInAction = 0;
             for (int index = 0; index < entities.Length; ++index)
                 entities[index].isInAction = entityIndexInAction == index;
+
+            entities[entityIndexInAction].RestoreStamina();
         }
 
         Camera.main.transform.localPosition = Vector3.Lerp(
