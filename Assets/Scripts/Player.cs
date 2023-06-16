@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : Entity {
-
-    void Start()
+    new void Start()
     {
         base.Start();
         isPlayer = true;

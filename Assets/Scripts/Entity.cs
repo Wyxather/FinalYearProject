@@ -89,7 +89,7 @@ public class Entity : MonoBehaviour
         if (collider == null)
             return;
         health.value -= 30.0f;
-        Destroy(collider.gameObject, .001f);
+        Destroy(collider.gameObject, .1f);
     }
 
     bool IsInAction()

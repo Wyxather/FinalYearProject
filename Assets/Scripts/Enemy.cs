@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : Entity
 {
-    void Start()
+    new void Start()
     {
         base.Start();
         isBot = true;
