@@ -17,6 +17,13 @@ public class Entity : MonoBehaviour
             this.max = value;
         }
 
+        
+        public StatusValue(float value, float max)
+        {
+            this.value = value;
+            this.max = max;
+        }
+
         public void SetImage(Image image)
         {
             this.bar = image;
@@ -28,12 +35,6 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public class PowerBar
-    {
-        public bool active;
-        public float value;
-    }
-
     public Rigidbody2D projectile;
 
     Cannon cannon;
@@ -43,9 +44,9 @@ public class Entity : MonoBehaviour
     public bool isPlayer;
     public bool isBot;
     public bool isInAction;
-    public StatusValue health = new StatusValue(100.0f);
-    public StatusValue stamina = new StatusValue(1.0f);
-    public PowerBar power = new PowerBar();
+    public StatusValue health = new StatusValue(100f);
+    public StatusValue stamina = new StatusValue(1f);
+    public StatusValue power = new StatusValue(0f, 20f);
     float angle = 0f;
 
     public void Start()
@@ -61,6 +62,8 @@ public class Entity : MonoBehaviour
                     health.SetImage(image);
                 else if (image.name == "StaminaAmount")
                     stamina.SetImage(image);
+                else if (image.name == "PowerAmount")
+                    power.SetImage(image);
             }
         }
     }
@@ -86,7 +89,7 @@ public class Entity : MonoBehaviour
         if (collider == null)
             return;
         health.value -= 30.0f;
-        Destroy(collider.gameObject, .1f);
+        Destroy(collider.gameObject, .001f);
     }
 
     bool IsInAction()
@@ -123,7 +126,10 @@ public class Entity : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             power.value = 0.0f;
         if (Input.GetKey(KeyCode.Space))
-            power.value += Time.deltaTime * 10.0f;
+            {
+                power.value += Time.deltaTime * 10.0f;
+                power.value = Mathf.Clamp(power.value, 0f, power.max);
+            }
         if (Input.GetKeyUp(KeyCode.Space))
             Shoot();
         var horizontal = Input.GetAxis("Horizontal");
@@ -144,6 +150,7 @@ public class Entity : MonoBehaviour
     {
         health.UpdateBar();
         stamina.UpdateBar();
+        power.UpdateBar();
     }
 
     void UpdateCannon()
