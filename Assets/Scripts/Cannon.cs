@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    // Start is called before the first frame update
+    SpriteRenderer spriteRenderer;
+
     void Start()
     {
-        
+         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void FlipX(bool value)
     {
-        
+        spriteRenderer.flipX = value;
+    }
+
+    public bool FlipX()
+    {
+        return spriteRenderer.flipX;
     }
 }
