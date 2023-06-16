@@ -97,7 +97,7 @@ public class Entity : MonoBehaviour
         return isInAction;
     }
 
-    bool IsDead()
+    public bool IsDead()
     {
         return health.value <= 0.0f;
     }
