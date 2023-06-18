@@ -11,7 +11,8 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         entities = GetComponentsInChildren<Entity>();
-        entities[0].isInAction = true;
+        if (entities.Length != 0)
+            entities[0].isInAction = true;
     }
 
     void Update()

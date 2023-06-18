@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour 
 {
+    [SerializeField]
+    float transformRotationZOffset;
     Rigidbody2D rigidBody2D;
 
     void  Start()
@@ -14,6 +16,6 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         float angle = Mathf.Atan2(rigidBody2D.velocity.y, rigidBody2D.velocity.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle - 40f, Vector3.forward);
+        transform.rotation = Quaternion.AngleAxis(angle + transformRotationZOffset, Vector3.forward);
     }
 }
