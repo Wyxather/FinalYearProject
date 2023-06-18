@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Entity : MonoBehaviour
+public class Character : MonoBehaviour
 {
     public class StatusValue
     {
@@ -113,6 +113,11 @@ public class Entity : MonoBehaviour
         stamina.value = stamina.max;
     }
 
+    public void DecreaseHealth(float value)
+    {
+        health.value -= value;
+    }
+    
     void Shoot()
     {
         var backup = cannon.transform.rotation;

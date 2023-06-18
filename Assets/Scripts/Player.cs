@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : Entity {
+public class Player : Character {
     new void Start()
     {
         base.Start();

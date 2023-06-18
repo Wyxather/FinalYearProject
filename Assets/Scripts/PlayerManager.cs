@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    Entity[] entities;
+    Character[] entities;
     float tick = 10.0f;
     int entityIndexInAction = 0;
 
     void Start()
     {
-        entities = GetComponentsInChildren<Entity>();
+        entities = GetComponentsInChildren<Character>();
         if (entities.Length != 0)
             entities[0].isInAction = true;
     }
 
     void Update()
     {
-        entities = GetComponentsInChildren<Entity>();
+        entities = GetComponentsInChildren<Character>();
 
         if (entities.Length == 0)
             return;

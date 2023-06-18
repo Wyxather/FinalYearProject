@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : Entity
+public class Enemy : Character
 {
     new void Start()
     {
