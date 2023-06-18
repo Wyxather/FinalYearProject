@@ -24,11 +24,14 @@ public class GroundScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        var projectile = collision.GetComponent<Projectile>();
         if (collision.GetComponent<Projectile>() == null)
             return;
+
         var collider = collision.GetComponent<CircleCollider2D>();
         if (collider == null)
             return;
+            
         Explode(collider);
         Destroy(collision.gameObject, .02f);
     }
