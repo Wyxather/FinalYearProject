@@ -83,12 +83,13 @@ public class Entity : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Projectile>() == null)
+        var projectile = collision.GetComponent<Projectile>();
+        if (projectile == null)
             return;
         var collider = collision.GetComponent<CircleCollider2D>();
         if (collider == null)
             return;
-        health.value -= 30.0f;
+        health.value -= projectile.GetDamage();
         Destroy(collider.gameObject, .1f);
     }
 
