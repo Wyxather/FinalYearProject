@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,15 +12,5 @@ public class FinalYearProject : MonoBehaviour
 
         if (GUI.Button(new Rect(20, 70, 80, 20), "Level"))
             SceneManager.LoadScene("Level", LoadSceneMode.Single);
-    }
-
-    Camera GetMainCamera()
-    {
-        return Camera.main;
-    }
-
-    void FocusMainCameraOnTransform(Transform transform)
-    {
-        Camera.main.transform.SetParent(transform);
     }
 }

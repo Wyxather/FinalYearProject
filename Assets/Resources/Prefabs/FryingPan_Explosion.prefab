@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3030113499872961155}
   - component: {fileID: 9164212462351890692}
   m_Layer: 0
-  m_Name: Explosion
+  m_Name: FryingPan_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.55
 --- !u!50 &-3030113499872961155
 Rigidbody2D:
   serializedVersion: 4
@@ -108,4 +108,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20829f5b253c63d4c8b0ac28e79a383e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 10

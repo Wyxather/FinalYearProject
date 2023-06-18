@@ -81,18 +81,6 @@ public class Character : MonoBehaviour
         UpdateInput();
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        var projectile = collision.GetComponent<Projectile>();
-        if (projectile == null)
-            return;
-        var collider = collision.GetComponent<CircleCollider2D>();
-        if (collider == null)
-            return;
-        health.value -= projectile.GetDamage();
-        Destroy(collider.gameObject, .1f);
-    }
-
     bool IsInAction()
     {
         return isInAction;

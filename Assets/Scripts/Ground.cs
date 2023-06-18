@@ -22,6 +22,7 @@ public class Ground : MonoBehaviour
     void CreateTexture2D()
     {
         texture2D = Instantiate(serializedTexture2D);
+        texture2D.alphaIsTransparency = true;
     }
 
     void CreateSprite()
@@ -38,7 +39,7 @@ public class Ground : MonoBehaviour
                 .5f,
                 .5f
             ),
-            50f
+            60f
         );
     }
 
@@ -68,11 +69,11 @@ public class Ground : MonoBehaviour
 
     void ClearTexture(Vector2Int position, float radius)
     {
-        int r = Mathf.FloorToInt(radius * spriteRenderer.sprite.texture.width / spriteRenderer.bounds.size.x);
+        int r = Mathf.RoundToInt(radius * spriteRenderer.sprite.texture.width / spriteRenderer.bounds.size.x);
         int r2 = r * r;
         for (int i = 0; i <= r; i++)
         {
-            int d = Mathf.FloorToInt(Mathf.Sqrt(r2 - i * i));
+            int d = Mathf.RoundToInt(Mathf.Sqrt(r2 - i * i));
             for (int j = 0; j <= d; j++)
             {
                 int px = position.x + i;
@@ -92,8 +93,8 @@ public class Ground : MonoBehaviour
         var pixelCoordinates = Vector2Int.zero;
         var dx = (positoin.x - transform.position.x);
         var dy = (positoin.y - transform.position.y);
-        pixelCoordinates.x = Mathf.FloorToInt(.5f * spriteRenderer.sprite.texture.width + dx * (spriteRenderer.sprite.texture.width / spriteRenderer.bounds.size.x));
-        pixelCoordinates.y = Mathf.FloorToInt(.5f * spriteRenderer.sprite.texture.height + dy * (spriteRenderer.sprite.texture.height / spriteRenderer.bounds.size.y));
+        pixelCoordinates.x = Mathf.RoundToInt(.5f * spriteRenderer.sprite.texture.width + dx * (spriteRenderer.sprite.texture.width / spriteRenderer.bounds.size.x));
+        pixelCoordinates.y = Mathf.RoundToInt(.5f * spriteRenderer.sprite.texture.height + dy * (spriteRenderer.sprite.texture.height / spriteRenderer.bounds.size.y));
         return pixelCoordinates;
     }
 }

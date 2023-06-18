@@ -10,6 +10,8 @@ public class Explosion : MonoBehaviour
     void Start()
     {
         circleCollider2D = GetComponent<CircleCollider2D>();
+        if (circleCollider2D == null)
+            Debug.LogError("Explosion is missing CircleCollider2D component.");
     }
 
     void OnTriggerEnter2D(Collider2D collider2D)
@@ -29,15 +31,5 @@ public class Explosion : MonoBehaviour
     {
         if (ground != null)
             ground.Explode(circleCollider2D);
-    }
-
-    public void SetDamage(float damage)
-    {
-        this.damage = damage;
-    }
-
-    public void SetRadius(float radius)
-    {
-        circleCollider2D.radius = radius;
     }
 }
