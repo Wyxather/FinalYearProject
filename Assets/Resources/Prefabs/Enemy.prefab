@@ -640,10 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d10215861b3954e9dc6cfe7f630d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 3822130239049632725, guid: dd3e51672d5d65e4d88a18d7f8f7a2f4, type: 3}
-  isPlayer: 0
-  isBot: 0
-  isInAction: 0
+  projectileObject: {fileID: 1829951266332312934, guid: dd3e51672d5d65e4d88a18d7f8f7a2f4, type: 3}
 --- !u!1 &6921156153985908371
 GameObject:
   m_ObjectHideFlags: 0

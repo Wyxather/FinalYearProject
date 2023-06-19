@@ -68,17 +68,17 @@ public class Character : MonoBehaviour
         {
             switch (image.name)
             {
-            case "HealthAmount":
-                health.SetImage(image);
-                break;
-            case "StaminaAmount":
-                stamina.SetImage(image);
-                break;
-            case "PowerAmount":
-                power.SetImage(image);
-                break;
-            default:
-                break;
+                case "HealthAmount":
+                    health.SetImage(image);
+                    break;
+                case "StaminaAmount":
+                    stamina.SetImage(image);
+                    break;
+                case "PowerAmount":
+                    power.SetImage(image);
+                    break;
+                default:
+                    break;
             }
         }
     }

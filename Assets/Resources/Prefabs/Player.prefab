@@ -512,7 +512,7 @@ Transform:
   - {fileID: 952139536882689855}
   - {fileID: 1508819494480861939}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8046745118489446599
 SpriteRenderer:
@@ -640,10 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09439c085a7b59843975e81824ae7d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 3822130239049632725, guid: dd3e51672d5d65e4d88a18d7f8f7a2f4, type: 3}
-  isPlayer: 0
-  isBot: 0
-  isInAction: 0
+  projectileObject: {fileID: 1829951266332312934, guid: dd3e51672d5d65e4d88a18d7f8f7a2f4, type: 3}
 --- !u!1 &6921156153985908371
 GameObject:
   m_ObjectHideFlags: 0

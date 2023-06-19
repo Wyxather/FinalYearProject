@@ -33,7 +33,7 @@ public class Player : Character
             if (cannon.FlipX())
             {
                 cannonAngle += 180f;
-                if (cannonAngle > 270f)
+                if (cannonAngle >= 180f)
                     cannonAngle = Mathf.Clamp(cannonAngle, 270f, 360f);
                 else
                     cannonAngle = Mathf.Clamp(cannonAngle, 0f, 90f);
