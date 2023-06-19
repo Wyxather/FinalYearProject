@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour
@@ -8,7 +6,7 @@ public class Cannon : MonoBehaviour
 
     void Start()
     {
-         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void FlipX(bool value)

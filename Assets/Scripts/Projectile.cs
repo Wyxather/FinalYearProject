@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
 
     void RotateTransform()
     {
-        float angle = Mathf.Atan2(rigidBody2D.velocity.y, rigidBody2D.velocity.x) * Mathf.Rad2Deg;
+        var angle = Mathf.Atan2(rigidBody2D.velocity.y, rigidBody2D.velocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle + transformRotationZOffset, Vector3.forward);
     }
 }

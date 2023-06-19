@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +6,9 @@ public class Character : MonoBehaviour
     public class StatusValue
     {
         public float value;
+
         public float max;
+
         Image bar;
 
         public StatusValue(float value)
@@ -17,7 +17,6 @@ public class Character : MonoBehaviour
             this.max = value;
         }
 
-        
         public StatusValue(float value, float max)
         {
             this.value = value;
@@ -35,55 +34,56 @@ public class Character : MonoBehaviour
         }
     }
 
-    public Rigidbody2D projectile;
+    [SerializeField]
+    GameObject projectile;
 
-    Cannon cannon;
+    protected SpriteRenderer spriteRenderer;
 
-    SpriteRenderer spriteRenderer;
+    protected Cannon cannon;
 
-    public bool isPlayer;
-    public bool isBot;
-    public bool isInAction;
-    public StatusValue health = new StatusValue(100f);
-    public StatusValue stamina = new StatusValue(1f);
-    public StatusValue power = new StatusValue(0f, 20f);
-    float angle = 0f;
+    protected float cannonAngle = 0f;
 
-    public void Start()
+    protected bool isPlayer;
+
+    bool hasShoot;
+
+    bool isMyTurn;
+
+    protected StatusValue health = new StatusValue(100f);
+
+    protected StatusValue stamina = new StatusValue(1f);
+
+    protected StatusValue power = new StatusValue(0f, 20f);
+
+    protected void Start()
     {
-        cannon = GetComponentInChildren<Cannon>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        cannon = GetComponentInChildren<Cannon>();
+
         var canvas = GetComponentInChildren<Canvas>();
-        if (canvas != null)
+        foreach (var image in canvas.GetComponentsInChildren<Image>())
         {
-            foreach (var image in canvas.GetComponentsInChildren<Image>())
+            switch (image.name)
             {
-                if (image.name == "HealthAmount")
-                    health.SetImage(image);
-                else if (image.name == "StaminaAmount")
-                    stamina.SetImage(image);
-                else if (image.name == "PowerAmount")
-                    power.SetImage(image);
+            case "HealthAmount":
+                health.SetImage(image);
+                break;
+            case "StaminaAmount":
+                stamina.SetImage(image);
+                break;
+            case "PowerAmount":
+                power.SetImage(image);
+                break;
+            default:
+                break;
             }
         }
     }
 
-    void Update()
+    protected void Update()
     {
-        UpdateUI();
-
-        if (IsDead())
-            return;
-        if (!IsInAction())
-            return;
-
-        UpdateCannonOnMousePosition();
-        UpdateInput();
-    }
-
-    bool IsInAction()
-    {
-        return isInAction;
+        UpdateImageBar();
     }
 
     public bool IsDead()
@@ -91,74 +91,48 @@ public class Character : MonoBehaviour
         return health.value <= 0.0f;
     }
 
-    bool IsExhausted()
+    public void IsMyTurn(bool value)
+    {
+        isMyTurn = value;
+    }
+
+    public bool IsMyTurn()
+    {
+        return isMyTurn;
+    }
+
+    protected bool IsExhausted()
     {
         return stamina.value <= 0.0f;
     }
 
-    public void RestoreStamina()
+    public void OnNextTurn()
     {
         stamina.value = stamina.max;
     }
 
-    public void DecreaseHealth(float value)
+    public void Damage(float value)
     {
         health.value -= value;
     }
-    
-    void Shoot()
+
+    protected void Shoot()
     {
-        var backup = cannon.transform.rotation;
-        var ang = angle;
+        var cannonTransformRotation = cannon.transform.rotation;
+        var projectileSpawnAngle = cannonAngle;
         if (!cannon.FlipX())
-            ang += 180f;
-        cannon.transform.rotation = Quaternion.Euler(0f, 0f, ang);
-        var p = Instantiate(projectile,
-                            cannon.transform.position - cannon.transform.right,
-                            cannon.transform.rotation);
-        p.AddForce(-cannon.transform.right * power.value, ForceMode2D.Impulse);
-        cannon.transform.rotation = backup;
+            projectileSpawnAngle += 180f;
+        cannon.transform.rotation = Quaternion.Euler(0f, 0f, projectileSpawnAngle);
+        Instantiate(projectile, cannon.transform.position - cannon.transform.right, cannon.transform.rotation)
+            .GetComponent<Rigidbody2D>()
+            .AddForce(-cannon.transform.right * power.value, ForceMode2D.Impulse);
+        cannon.transform.rotation = cannonTransformRotation;
     }
 
-    void UpdateInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            power.value = 0.0f;
-        if (Input.GetKey(KeyCode.Space))
-        {
-            power.value += Time.deltaTime * 10.0f;
-            power.value = Mathf.Clamp(power.value, 0f, power.max);
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-            Shoot();
-        var horizontal = Input.GetAxis("Horizontal");
-        if (horizontal != 0)
-        {
-            if (!IsExhausted())
-            {
-                Vector3 deltaPos = Vector3.right * horizontal * Time.deltaTime * 1.0f;
-                transform.position += deltaPos;
-                stamina.value -= Mathf.Abs(deltaPos.x);
-            }
-            spriteRenderer.flipX = horizontal < 0;
-            cannon.FlipX(spriteRenderer.flipX);
-        }
-    }
-
-    void UpdateUI()
+    void UpdateImageBar()
     {
         health.UpdateImageBar();
         stamina.UpdateImageBar();
         power.UpdateImageBar();
-    }
-
-    void UpdateCannonOnMousePosition()
-    {
-        var delta = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        delta.Normalize();
-        angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
-        if (cannon.FlipX())
-            angle += 180f;
-        cannon.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 }

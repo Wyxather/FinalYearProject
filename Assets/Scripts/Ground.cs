@@ -61,7 +61,6 @@ public class Ground : MonoBehaviour
     void Explode(Vector2Int position, float radius)
     {
         ClearTexture(position, radius);
-        texture2D.Apply();
         CreateSprite();
         DestroyPolygonCollider2D();
         CreatePolygonCollider2D();
@@ -69,23 +68,24 @@ public class Ground : MonoBehaviour
 
     void ClearTexture(Vector2Int position, float radius)
     {
-        int r = Mathf.RoundToInt(radius * spriteRenderer.sprite.texture.width / spriteRenderer.bounds.size.x);
-        int r2 = r * r;
-        for (int i = 0; i <= r; i++)
+        var r = Mathf.RoundToInt(radius * spriteRenderer.sprite.texture.width / spriteRenderer.bounds.size.x);
+        var r2 = r * r;
+        for (var i = 0; i <= r; i++)
         {
-            int d = Mathf.RoundToInt(Mathf.Sqrt(r2 - i * i));
-            for (int j = 0; j <= d; j++)
+            var d = Mathf.RoundToInt(Mathf.Sqrt(r2 - i * i));
+            for (var j = 0; j <= d; j++)
             {
-                int px = position.x + i;
-                int nx = position.x - i;
-                int py = position.y + j;
-                int ny = position.y - j;
+                var px = position.x + i;
+                var nx = position.x - i;
+                var py = position.y + j;
+                var ny = position.y - j;
                 texture2D.SetPixel(px, py, Color.clear);
                 texture2D.SetPixel(nx, py, Color.clear);
                 texture2D.SetPixel(px, ny, Color.clear);
                 texture2D.SetPixel(nx, ny, Color.clear);
             }
         }
+        texture2D.Apply();
     }
 
     Vector2Int WorldToPixelCoordinates(Vector2 positoin)

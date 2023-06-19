@@ -16,18 +16,18 @@ public class Explosion : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider2D)
     {
-        DamageEntity(collider2D.GetComponent<Character>());
-        DestroyTerrain(collider2D.GetComponent<Ground>());
+        DamageCharacter(collider2D.GetComponent<Character>());
+        DestroyGround(collider2D.GetComponent<Ground>());
         Destroy(gameObject);
     }
 
-    void DamageEntity(Character character)
+    void DamageCharacter(Character character)
     {
         if (character != null)
-            character.DecreaseHealth(damage);
+            character.Damage(damage);
     }
 
-    void DestroyTerrain(Ground ground)
+    void DestroyGround(Ground ground)
     {
         if (ground != null)
             ground.Explode(circleCollider2D);
