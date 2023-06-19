@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3639905727462367478}
   - component: {fileID: -1320427889377991182}
   m_Layer: 0
-  m_Name: FryingPan_Projectile
+  m_Name: MixedRice_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b5ee590e68373bc459df0b8e3837f0c4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54256eb078c223a499c4a35706ccea4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -148,7 +148,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.55
+  m_Radius: 0.85
 --- !u!114 &-1320427889377991182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,5 +161,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7202db0de48aa9b4eab0ebe8dced4f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformRotationZOffset: -40
-  explosion: {fileID: 8105241611800076463, guid: fbe5e1a003e57c94db95a24123d88fbe, type: 3}
+  transformRotationZOffset: -35.5
+  explosion: {fileID: 8105241611800076463, guid: d217f62165862c643bdb3e9aa6e65366, type: 3}
