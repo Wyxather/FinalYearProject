@@ -35,7 +35,7 @@ public class CharacterManager : MonoBehaviour
                 {
                     UpdateTimer();
 
-                    if (IsNextTurn())
+                    if (IsNextTurn() || character.HasFinishShooting())
                     {
                         var nextCharacter = characters[GetNextCharacterIndex(index)];
                         ResetTimer();
@@ -44,7 +44,10 @@ public class CharacterManager : MonoBehaviour
                     }
                     else
                     {
-                        FocusCameraOnCharacter(character);
+                        if (character.IsShooting())
+                            FocusCameraOnProjectile(character.GetProjectilePosition());
+                        else
+                            FocusCameraOnCharacter(character);
                     }
                 }
             }
@@ -70,6 +73,13 @@ public class CharacterManager : MonoBehaviour
                          new Vector3(character.transform.localPosition.x, character.transform.localPosition.y,
                                      Camera.main.transform.localPosition.z),
                          5.0f * Time.deltaTime);
+    }
+
+    void FocusCameraOnProjectile(Vector3 position)
+    {
+        Camera.main.transform.localPosition = Vector3.Lerp(
+            Camera.main.transform.localPosition,
+            new Vector3(position.x, position.y, Camera.main.transform.localPosition.z), 5.0f * Time.deltaTime);
     }
 
     void UpdateTimer()

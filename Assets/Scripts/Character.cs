@@ -35,7 +35,9 @@ public class Character : MonoBehaviour
     }
 
     [SerializeField]
-    GameObject projectile;
+    GameObject projectileObject;
+
+    Rigidbody2D projectileRigidBody2D;
 
     protected SpriteRenderer spriteRenderer;
 
@@ -45,9 +47,9 @@ public class Character : MonoBehaviour
 
     protected bool isPlayer;
 
-    bool hasShoot;
-
     bool isMyTurn;
+
+    bool isShooting;
 
     protected StatusValue health = new StatusValue(100f);
 
@@ -101,6 +103,16 @@ public class Character : MonoBehaviour
         return isMyTurn;
     }
 
+    public bool IsShooting()
+    {
+        return isShooting && projectileRigidBody2D != null;
+    }
+
+    public bool HasFinishShooting()
+    {
+        return isShooting && projectileRigidBody2D == null;
+    }
+
     protected bool IsExhausted()
     {
         return stamina.value <= 0.0f;
@@ -109,6 +121,7 @@ public class Character : MonoBehaviour
     public void OnNextTurn()
     {
         stamina.value = stamina.max;
+        isShooting = false;
     }
 
     public void Damage(float value)
@@ -123,10 +136,12 @@ public class Character : MonoBehaviour
         if (!cannon.FlipX())
             projectileSpawnAngle += 180f;
         cannon.transform.rotation = Quaternion.Euler(0f, 0f, projectileSpawnAngle);
-        Instantiate(projectile, cannon.transform.position - cannon.transform.right, cannon.transform.rotation)
-            .GetComponent<Rigidbody2D>()
-            .AddForce(-cannon.transform.right * power.value, ForceMode2D.Impulse);
+        var projectile = Instantiate(projectileObject, cannon.transform.position - cannon.transform.right,
+                                     cannon.transform.rotation);
+        projectileRigidBody2D = projectile.GetComponent<Rigidbody2D>();
+        projectileRigidBody2D.AddForce(-cannon.transform.right * power.value, ForceMode2D.Impulse);
         cannon.transform.rotation = cannonTransformRotation;
+        isShooting = true;
     }
 
     void UpdateImageBar()
@@ -134,5 +149,10 @@ public class Character : MonoBehaviour
         health.UpdateImageBar();
         stamina.UpdateImageBar();
         power.UpdateImageBar();
+    }
+
+    public Vector3 GetProjectilePosition()
+    {
+        return projectileRigidBody2D.transform.localPosition;
     }
 }

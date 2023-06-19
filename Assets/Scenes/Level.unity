@@ -407,6 +407,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 529787006}
+    - target: {fileID: 8107733446386800392, guid: f641fb427345d1041a98b7c6693a9bc3, type: 3}
+      propertyPath: projectileObject
+      value: 
+      objectReference: {fileID: 1829951266332312934, guid: dd3e51672d5d65e4d88a18d7f8f7a2f4, type: 3}
+    - target: {fileID: 8394441202284221600, guid: f641fb427345d1041a98b7c6693a9bc3, type: 3}
+      propertyPath: projectileObject
+      value: 
+      objectReference: {fileID: 1829951266332312934, guid: dd3e51672d5d65e4d88a18d7f8f7a2f4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
