@@ -5,12 +5,14 @@ public class FinalYearProject : MonoBehaviour
 {
     void OnGUI()
     {
-        GUI.Box(new Rect(10, 10, 100, 90), "Scenes");
+        GUI.Box(new Rect(10, 10, 100, 60), "Settings");
 
-        if (GUI.Button(new Rect(20, 40, 80, 20), "Main"))
+        if (GUI.Button(new Rect(20, 40, 80, 20), "Main Menu"))
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
+    }
 
-        if (GUI.Button(new Rect(20, 70, 80, 20), "Level"))
-            SceneManager.LoadScene("Level", LoadSceneMode.Single);
+    public static void LoadLevel_001()
+    {
+        SceneManager.LoadScene("Level", LoadSceneMode.Single);
     }
 }
