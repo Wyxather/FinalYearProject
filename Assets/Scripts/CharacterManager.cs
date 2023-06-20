@@ -69,6 +69,9 @@ public class CharacterManager : MonoBehaviour
                 }
 
                 Destroy(character.gameObject);
+
+                if (character.IsPlayer())
+                    FinalYearProject.LoadScene_Main();
             }
         }
     }
