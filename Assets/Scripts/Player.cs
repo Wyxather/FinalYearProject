@@ -18,6 +18,9 @@ public class Player : Character
         if (!IsMyTurn())
             return;
 
+        if (IsShooting())
+            return;
+
         UpdateCannonOnMouseClickPosition();
         UpdateInput();
     }

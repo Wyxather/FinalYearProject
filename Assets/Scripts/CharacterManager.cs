@@ -40,12 +40,9 @@ public class CharacterManager : MonoBehaviour
             {
                 if (character.IsMyTurn())
                 {
-                    if (character.IsPlayer())
-                        UpdateTimer();
-                    else
-                        remainingTimeTillNextTurn = 0f;
+                    UpdateTimer();
 
-                    if (IsNextTurn() || character.HasFinishShooting())
+                    if (IsNextTurn() || (character.IsShooting() && !character.HasOnGoingProjectile()))
                     {
                         var nextCharacter = characters[GetNextCharacterIndex(index)];
                         ResetTimer();
@@ -54,7 +51,7 @@ public class CharacterManager : MonoBehaviour
                     }
                     else
                     {
-                        if (character.IsShooting())
+                        if (character.IsShooting() && character.HasOnGoingProjectile())
                             FocusCameraOnProjectile(character.GetProjectilePosition());
                         else
                             FocusCameraOnCharacter(character);

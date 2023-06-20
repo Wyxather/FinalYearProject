@@ -51,6 +51,8 @@ public class Character : MonoBehaviour
 
     bool isShooting;
 
+    protected float waitForXSeconds;
+
     protected StatusValue health = new StatusValue(100f);
 
     protected StatusValue stamina = new StatusValue(1f);
@@ -105,12 +107,12 @@ public class Character : MonoBehaviour
 
     public bool IsShooting()
     {
-        return isShooting && projectileRigidBody2D != null;
+        return isShooting;
     }
 
-    public bool HasFinishShooting()
+    public bool HasOnGoingProjectile()
     {
-        return isShooting && projectileRigidBody2D == null;
+        return projectileRigidBody2D != null;
     }
 
     protected bool IsExhausted()
@@ -127,6 +129,7 @@ public class Character : MonoBehaviour
     {
         stamina.value = stamina.max;
         isShooting = false;
+        waitForXSeconds = 1f;
     }
 
     public void Damage(float value)
@@ -140,12 +143,28 @@ public class Character : MonoBehaviour
         var projectileSpawnAngle = cannonAngle;
         if (!cannon.FlipX())
             projectileSpawnAngle += 180f;
+        Debug.Log($"Player Angle: {projectileSpawnAngle}");
         cannon.transform.rotation = Quaternion.Euler(0f, 0f, projectileSpawnAngle);
-        var projectile = Instantiate(projectileObject, cannon.transform.position - cannon.transform.right,
-                                     cannon.transform.rotation);
-        projectileRigidBody2D = projectile.GetComponent<Rigidbody2D>();
+        projectileRigidBody2D = Instantiate(projectileObject, cannon.transform.position - cannon.transform.right, cannon.transform.rotation).GetComponent<Rigidbody2D>();
         projectileRigidBody2D.AddForce(-cannon.transform.right * power.value, ForceMode2D.Impulse);
         cannon.transform.rotation = cannonTransformRotation;
+        isShooting = true;
+    }
+
+    protected void Shoot(Vector2 targetPosition, float timeToReach)
+    {
+        //https://stackoverflow.com/questions/42792320/moving-a-2d-physics-body-on-a-parabolic-path-with-initial-impulse-in-unity
+
+        // Calculate the initial position of the projectile
+        // Adjusted for the muzzle position
+        Vector2 initialPosition = cannon.transform.position - cannon.transform.right;
+
+        projectileRigidBody2D = Instantiate(projectileObject, initialPosition, Quaternion.identity).GetComponent<Rigidbody2D>();
+        projectileRigidBody2D.velocity = new Vector2(
+            (targetPosition.x - initialPosition.x) / timeToReach,
+            (targetPosition.y - initialPosition.y - .5f * Physics2D.gravity.y * projectileRigidBody2D.gravityScale * timeToReach * timeToReach) / timeToReach
+        );
+
         isShooting = true;
     }
 
