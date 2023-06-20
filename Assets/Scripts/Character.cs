@@ -199,6 +199,46 @@ public class Character : MonoBehaviour
         Debug.Log($"Cannon FlipX: {cannon.FlipX()}, Angle: {angle}, Cannon Rot: {cannon.transform.rotation}");
     }
 
+    protected void LookAt(Vector2 targetPosition, float timeToReach)
+    {
+        //https://stackoverflow.com/questions/42792320/moving-a-2d-physics-body-on-a-parabolic-path-with-initial-impulse-in-unity
+
+        // Calculate the initial position of the projectile
+        // Adjusted for the muzzle position
+        float cannonRightMultiplier;
+        if (!cannon.FlipX())
+            cannonRightMultiplier = -1f;
+        else
+            cannonRightMultiplier = 1f;
+        Vector2 initialPosition = cannon.transform.position - cannon.transform.right * cannonRightMultiplier;
+
+        // Calculate the direction towards the player
+        Vector2 direction = targetPosition - initialPosition;
+
+        // Spawn projectile with specified initial speed
+        var initialVelocity = new Vector2(
+            direction.x / timeToReach,
+            (direction.y - .5f * Physics2D.gravity.y * timeToReach * timeToReach) / timeToReach
+        );
+
+        // Calculate the angle between the enemy and the player
+        float angle = Mathf.Atan2(initialVelocity.y, initialVelocity.x) * Mathf.Rad2Deg;
+
+        // Rotate cannon and sprite
+        if (direction.x < 0)
+        {
+            spriteRenderer.flipX = true;
+            cannon.FlipX(true);
+            cannon.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f + 16f);
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+            cannon.FlipX(false);
+            cannon.transform.rotation = Quaternion.Euler(0f, 0f, angle - 16f);
+        }
+    }
+
     void UpdateImageBar()
     {
         health.UpdateImageBar();

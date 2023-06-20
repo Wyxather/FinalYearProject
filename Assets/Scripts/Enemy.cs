@@ -61,7 +61,9 @@ public class Enemy : Character
         }
         else
         {
-            Shoot(target.transform.position, Random.Range(.5f, 1.5f), Random.Range(1f - initialVelocityMultiplierErrorThreshold, 1f + initialVelocityMultiplierErrorThreshold));
+            var timeToReach = Random.Range(.5f, 1.5f);
+            LookAt(target.transform.position, timeToReach);
+            Shoot(target.transform.position, timeToReach, Random.Range(1f - initialVelocityMultiplierErrorThreshold, 1f + initialVelocityMultiplierErrorThreshold));
         }
     }
 }
