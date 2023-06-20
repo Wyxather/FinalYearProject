@@ -51,6 +51,8 @@ public class Character : MonoBehaviour
 
     bool isShooting;
 
+    protected bool hasBeginNextTurn;
+
     protected float waitForXSeconds;
 
     protected StatusValue health = new StatusValue(100f);
@@ -127,9 +129,10 @@ public class Character : MonoBehaviour
 
     public void OnNextTurn()
     {
-        stamina.value = stamina.max;
-        isShooting = false;
         waitForXSeconds = 1f;
+        stamina.value = stamina.max;
+        hasBeginNextTurn = false;
+        isShooting = false;
     }
 
     public void Damage(float value)

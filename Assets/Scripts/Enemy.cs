@@ -8,6 +8,10 @@ public class Enemy : Character
     [SerializeField]
     float initialVelocityMultiplierErrorThreshold = .25f;
 
+    bool shouldMove;
+
+    float moveDir;
+
     new void Start()
     {
         base.Start();
@@ -31,6 +35,33 @@ public class Enemy : Character
         if (IsShooting())
             return;
 
-        Shoot(target.transform.position, Random.Range(.5f, 1.5f), Random.Range(1f - initialVelocityMultiplierErrorThreshold, 1f + initialVelocityMultiplierErrorThreshold));
+        if (!hasBeginNextTurn)
+        {
+            shouldMove = Random.value >= .5f;
+            if (shouldMove)
+                moveDir = Random.value >= .5f ? 1f : -1f;
+            hasBeginNextTurn = true;
+        }
+
+        if (shouldMove)
+        {
+            if (!IsExhausted())
+            {
+                Vector3 deltaPos = Vector3.right * moveDir * Time.deltaTime * 1.0f;
+                transform.position += deltaPos;
+                stamina.value -= Mathf.Abs(deltaPos.x) * Random.Range(1f, 2f);
+                spriteRenderer.flipX = moveDir < 0;
+                cannon.FlipX(spriteRenderer.flipX);
+            }
+            else
+            {
+                waitForXSeconds = 1f;
+                shouldMove = false;
+            }
+        }
+        else
+        {
+            Shoot(target.transform.position, Random.Range(.5f, 1.5f), Random.Range(1f - initialVelocityMultiplierErrorThreshold, 1f + initialVelocityMultiplierErrorThreshold));
+        }
     }
 }
