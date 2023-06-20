@@ -27,13 +27,23 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         characters = GetComponentsInChildren<Character>();
+
+        if (characters.Length == 1 && characters[0].IsPlayer())
+        {
+            FinalYearProject.LoadScene_Main();
+            return;
+        }
+
         foreach (var (character, index) in characters.Select((value, i) => (value, i)))
         {
             if (!character.IsDead())
             {
                 if (character.IsMyTurn())
                 {
-                    UpdateTimer();
+                    if (character.IsPlayer())
+                        UpdateTimer();
+                    else
+                        remainingTimeTillNextTurn = 0f;
 
                     if (IsNextTurn() || character.HasFinishShooting())
                     {

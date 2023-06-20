@@ -118,6 +118,11 @@ public class Character : MonoBehaviour
         return stamina.value <= 0.0f;
     }
 
+    public bool IsPlayer()
+    {
+        return isPlayer;
+    }
+
     public void OnNextTurn()
     {
         stamina.value = stamina.max;
