@@ -160,4 +160,25 @@ public class Character : MonoBehaviour
     {
         return projectileRigidBody2D.transform.localPosition;
     }
+
+    public void LoadPrefab_FryingPan_Projectile()
+    {
+        projectileObject = Resources.Load("Prefabs/FryingPan_Projectile") as GameObject;
+    }
+
+    public void LoadPrefab_FriedRice_Projectile()
+    {
+        projectileObject = Resources.Load("Prefabs/FriedRice_Projectile") as GameObject;
+    }
+
+    public void LoadPrefab_MixedRice_Projectile()
+    {
+        projectileObject = Resources.Load("Prefabs/MixedRice_Projectile") as GameObject;
+    }
+
+    public void LoadPrefab_Soto_Projectile()
+    {
+        projectileObject = Resources.Load("Prefabs/Soto_Projectile") as GameObject;
+    }
+
 }
