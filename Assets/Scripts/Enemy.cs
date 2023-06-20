@@ -5,6 +5,9 @@ public class Enemy : Character
     [SerializeField]
     GameObject target;
 
+    [SerializeField]
+    float initialVelocityMultiplierErrorThreshold = .25f;
+
     new void Start()
     {
         base.Start();
@@ -28,6 +31,6 @@ public class Enemy : Character
         if (IsShooting())
             return;
 
-        Shoot(target.transform.position, Random.Range(.5f, 1.5f));
+        Shoot(target.transform.position, Random.Range(.5f, 1.5f), Random.Range(1f - initialVelocityMultiplierErrorThreshold, 1f + initialVelocityMultiplierErrorThreshold));
     }
 }

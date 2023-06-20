@@ -151,21 +151,47 @@ public class Character : MonoBehaviour
         isShooting = true;
     }
 
-    protected void Shoot(Vector2 targetPosition, float timeToReach)
+    protected void Shoot(Vector2 targetPosition, float timeToReach, float initialVelocityMultiplier)
     {
         //https://stackoverflow.com/questions/42792320/moving-a-2d-physics-body-on-a-parabolic-path-with-initial-impulse-in-unity
 
         // Calculate the initial position of the projectile
         // Adjusted for the muzzle position
-        Vector2 initialPosition = cannon.transform.position - cannon.transform.right;
+        float cannonRightMultiplier;
+        if (!cannon.FlipX())
+            cannonRightMultiplier = -1f;
+        else
+            cannonRightMultiplier = 1f;
+        Vector2 initialPosition = cannon.transform.position - cannon.transform.right * cannonRightMultiplier;
 
+        // Calculate the direction towards the player
+        Vector2 direction = targetPosition - initialPosition;
+
+        // Spawn projectile with specified initial speed
         projectileRigidBody2D = Instantiate(projectileObject, initialPosition, Quaternion.identity).GetComponent<Rigidbody2D>();
         projectileRigidBody2D.velocity = new Vector2(
-            (targetPosition.x - initialPosition.x) / timeToReach,
-            (targetPosition.y - initialPosition.y - .5f * Physics2D.gravity.y * projectileRigidBody2D.gravityScale * timeToReach * timeToReach) / timeToReach
-        );
+            direction.x / timeToReach,
+            (direction.y - .5f * Physics2D.gravity.y * projectileRigidBody2D.gravityScale * timeToReach * timeToReach) / timeToReach
+        ) * initialVelocityMultiplier;
 
         isShooting = true;
+
+        // Calculate the angle between the enemy and the player
+        float angle = Mathf.Atan2(projectileRigidBody2D.velocity.y, projectileRigidBody2D.velocity.x) * Mathf.Rad2Deg;
+
+        // Rotate cannon
+        if (direction.x < 0)
+        {
+            cannon.FlipX(true);
+            cannon.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f + 16f);
+        }
+        else
+        {
+            cannon.FlipX(false);
+            cannon.transform.rotation = Quaternion.Euler(0f, 0f, angle - 16f);
+        }
+
+        Debug.Log($"Cannon FlipX: {cannon.FlipX()}, Angle: {angle}, Cannon Rot: {cannon.transform.rotation}");
     }
 
     void UpdateImageBar()
