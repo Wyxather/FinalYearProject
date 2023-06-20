@@ -179,14 +179,16 @@ public class Character : MonoBehaviour
         // Calculate the angle between the enemy and the player
         float angle = Mathf.Atan2(projectileRigidBody2D.velocity.y, projectileRigidBody2D.velocity.x) * Mathf.Rad2Deg;
 
-        // Rotate cannon
+        // Rotate cannon and sprite
         if (direction.x < 0)
         {
+            spriteRenderer.flipX = true;
             cannon.FlipX(true);
             cannon.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f + 16f);
         }
         else
         {
+            spriteRenderer.flipX = false;
             cannon.FlipX(false);
             cannon.transform.rotation = Quaternion.Euler(0f, 0f, angle - 16f);
         }
