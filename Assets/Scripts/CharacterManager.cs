@@ -1,9 +1,16 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterManager : MonoBehaviour
 {
+    [SerializeField]
+    UnityEvent OnVictory;
+
+    [SerializeField]
+    UnityEvent OnGameOver;
+
     Character[] characters;
 
     float remainingTimeTillNextTurn;
@@ -30,8 +37,18 @@ public class CharacterManager : MonoBehaviour
 
         if (characters.Length == 1 && characters[0].IsPlayer())
         {
-            FinalYearProject.LoadScene_Main();
+            OnVictory.Invoke();
             return;
+        }
+        else
+        {
+            bool isPlayerDead = true;
+            foreach (var character in characters)
+                if (character.IsPlayer())
+                    isPlayerDead = false;
+
+            if (isPlayerDead)
+                OnGameOver.Invoke();
         }
 
         foreach (var (character, index) in characters.Select((value, i) => (value, i)))

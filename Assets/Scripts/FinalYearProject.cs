@@ -20,4 +20,14 @@ public class FinalYearProject : MonoBehaviour
     {
         SceneManager.LoadScene("Level", LoadSceneMode.Single);
     }
+
+    public static void LoadScene_Level2()
+    {
+        SceneManager.LoadScene("Level2", LoadSceneMode.Single);
+    }
+
+    public static void LoadScene_Level3()
+    {
+        SceneManager.LoadScene("Level3", LoadSceneMode.Single);
+    }
 }
