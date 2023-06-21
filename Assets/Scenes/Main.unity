@@ -547,7 +547,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1293728251970827324, guid: e7528e9941679ae46a4e7a27e61408be, type: 3}
         m_TargetAssemblyTypeName: FinalYearProject, Assembly-CSharp
-        m_MethodName: LoadScene_Level
+        m_MethodName: LoadScene_FriedRice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

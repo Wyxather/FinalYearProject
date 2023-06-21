@@ -30,4 +30,19 @@ public class FinalYearProject : MonoBehaviour
     {
         SceneManager.LoadScene("Level3", LoadSceneMode.Single);
     }
+
+    public static void LoadScene_FriedRice()
+    {
+        SceneManager.LoadScene("FriedRice", LoadSceneMode.Single);
+    }
+
+    public static void LoadScene_MixedRice()
+    {
+        SceneManager.LoadScene("MixedRice", LoadSceneMode.Single);
+    }
+
+    public static void LoadScene_Soto()
+    {
+        SceneManager.LoadScene("Soto", LoadSceneMode.Single);
+    }
 }
