@@ -512,7 +512,7 @@ Transform:
   - {fileID: 952139536882689855}
   - {fileID: 1508819494480861939}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8046745118489446599
 SpriteRenderer:
@@ -627,7 +627,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &3305527399591875640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,6 +641,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileObject: {fileID: 1829951266332312934, guid: dd3e51672d5d65e4d88a18d7f8f7a2f4, type: 3}
+  target: {fileID: 0}
+  initialVelocityMultiplierErrorThreshold: 0.25
 --- !u!1 &6921156153985908371
 GameObject:
   m_ObjectHideFlags: 0
