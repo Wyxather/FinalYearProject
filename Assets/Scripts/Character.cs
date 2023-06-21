@@ -89,6 +89,8 @@ public class Character : MonoBehaviour
 
     protected void Update()
     {
+        if (IsOutOfBounds())
+            Kill();
         UpdateImageBar();
     }
 
@@ -254,21 +256,34 @@ public class Character : MonoBehaviour
     public void LoadPrefab_FryingPan_Projectile()
     {
         projectileObject = Resources.Load("Prefabs/FryingPan_Projectile") as GameObject;
+        Debug.Log($"Projectile Selected: {projectileObject}");
     }
 
     public void LoadPrefab_FriedRice_Projectile()
     {
         projectileObject = Resources.Load("Prefabs/FriedRice_Projectile") as GameObject;
+        Debug.Log($"Projectile Selected: {projectileObject}");
     }
 
     public void LoadPrefab_MixedRice_Projectile()
     {
         projectileObject = Resources.Load("Prefabs/MixedRice_Projectile") as GameObject;
+        Debug.Log($"Projectile Selected: {projectileObject}");
     }
 
     public void LoadPrefab_Soto_Projectile()
     {
         projectileObject = Resources.Load("Prefabs/Soto_Projectile") as GameObject;
+        Debug.Log($"Projectile Selected: {projectileObject}");
     }
 
+    bool IsOutOfBounds()
+    {
+        return transform.position.y > 100f || transform.position.y < -100f;
+    }
+
+    void Kill()
+    {
+        Damage(health.value);
+    }
 }

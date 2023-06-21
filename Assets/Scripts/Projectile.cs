@@ -20,6 +20,9 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         RotateTransform();
+        if (IsOutOfBounds())
+            Destroy(gameObject);
+
     }
 
     void OnTriggerEnter2D(Collider2D collider2D)
@@ -32,5 +35,10 @@ public class Projectile : MonoBehaviour
     {
         var angle = Mathf.Atan2(rigidBody2D.velocity.y, rigidBody2D.velocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle + transformRotationZOffset, Vector3.forward);
+    }
+
+    bool IsOutOfBounds()
+    {
+        return rigidBody2D.transform.position.y > 100f || rigidBody2D.transform.position.y < -100f;
     }
 }
