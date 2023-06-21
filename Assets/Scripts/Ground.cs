@@ -22,7 +22,6 @@ public class Ground : MonoBehaviour
     void CreateTexture2D()
     {
         texture2D = Instantiate(serializedTexture2D);
-        texture2D.alphaIsTransparency = true;
     }
 
     void CreateSprite()
