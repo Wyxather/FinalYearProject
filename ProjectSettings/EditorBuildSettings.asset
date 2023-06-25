@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Soto.unity
     guid: f1f7233b91b2d86469e2d3b6e2997c4a
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: d62642b4c0e41e647ae12a016a472397
   m_configObjects: {}

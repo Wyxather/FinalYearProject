@@ -40,16 +40,6 @@ public class CharacterManager : MonoBehaviour
             OnVictory.Invoke();
             return;
         }
-        else
-        {
-            bool isPlayerDead = true;
-            foreach (var character in characters)
-                if (character.IsPlayer())
-                    isPlayerDead = false;
-
-            if (isPlayerDead)
-                OnGameOver.Invoke();
-        }
 
         foreach (var (character, index) in characters.Select((value, i) => (value, i)))
         {
@@ -88,7 +78,7 @@ public class CharacterManager : MonoBehaviour
                 Destroy(character.gameObject);
 
                 if (character.IsPlayer())
-                    FinalYearProject.LoadScene_Main();
+                    OnGameOver.Invoke();
             }
         }
     }

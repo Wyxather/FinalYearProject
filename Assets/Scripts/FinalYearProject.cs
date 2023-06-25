@@ -11,6 +11,11 @@ public class FinalYearProject : MonoBehaviour
             LoadScene_Main();
     }
 
+    public static void Exit()
+    {
+        Application.Quit();
+    }
+
     public static void LoadScene_Main()
     {
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
@@ -44,5 +49,10 @@ public class FinalYearProject : MonoBehaviour
     public static void LoadScene_Soto()
     {
         SceneManager.LoadScene("Soto", LoadSceneMode.Single);
+    }
+
+    public static void LoadScene_GameOver()
+    {
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 }
